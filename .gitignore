@@ -1,0 +1,6 @@
+/out/
+.idea/
+*.ini
+*.iml
+/target/
+/workspace.xml
