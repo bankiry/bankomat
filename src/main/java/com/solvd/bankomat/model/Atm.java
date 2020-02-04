@@ -1,0 +1,47 @@
+package com.solvd.bankomat.model;
+
+import java.util.List;
+
+public class Atm {
+
+    private long id;
+    private Bank ownerBank;
+    private List<Language> languages;
+    private List<BankNote> bankNotes;
+
+    public enum Language {
+        RUSSIAN, ENGLISH;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Bank getOwnerBank() {
+        return ownerBank;
+    }
+
+    public void setOwnerBank(Bank ownerBank) {
+        this.ownerBank = ownerBank;
+    }
+
+    public List<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<Language> languages) {
+        this.languages = languages;
+    }
+
+    public List<BankNote> getBankNotes() {
+        return bankNotes;
+    }
+
+    public void setBankNotes(List<BankNote> bankNotes) {
+        this.bankNotes = bankNotes;
+    }
+}
