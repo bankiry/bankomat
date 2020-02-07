@@ -1,49 +1,50 @@
 package com.solvd.bankomat.model;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class Card {
 
-    private long id;
-    private int number;
-    private String cartHolderName;
-    private int cvv;
+    private Long id;
+    private BigInteger number;
+    private String cardHolderName;
+    private Integer cvv;
     private Date expirationDate;
 
-    private int pin;
-    private int pinAttemptsCount;
+    private Integer pin;
+    private Integer pinAttemptsCount;
 
-    private Date releaseDate;
+    private boolean isBlocked;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNumber() {
+    public BigInteger getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(BigInteger number) {
         this.number = number;
     }
 
-    public String getCartHolderName() {
-        return cartHolderName;
+    public String getCardHolderName() {
+        return cardHolderName;
     }
 
-    public void setCartHolderName(String cartHolderName) {
-        this.cartHolderName = cartHolderName;
+    public void setCardHolderName(String cardHolderName) {
+        this.cardHolderName = cardHolderName;
     }
 
-    public int getCvv() {
+    public Integer getCvv() {
         return cvv;
     }
 
-    public void setCvv(int cvv) {
+    public void setCvv(Integer cvv) {
         this.cvv = cvv;
     }
 
@@ -55,27 +56,27 @@ public class Card {
         this.expirationDate = expirationDate;
     }
 
-    public int getPin() {
+    public Integer getPin() {
         return pin;
     }
 
-    public void setPin(int pin) {
+    public void setPin(Integer pin) {
         this.pin = pin;
     }
 
-    public int getPinAttemptsCount() {
+    public Integer getPinAttemptsCount() {
         return pinAttemptsCount;
     }
 
-    public void setPinAttemptsCount(int pinAttemptsCount) {
+    public void setPinAttemptsCount(Integer pinAttemptsCount) {
         this.pinAttemptsCount = pinAttemptsCount;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
+    public boolean isBlocked() {
+        return isBlocked;
     }
 
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 }

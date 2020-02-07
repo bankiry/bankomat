@@ -5,26 +5,27 @@ import java.util.List;
 
 public class BankAccount {
 
-    private long id;
-    private int number;
+    private Long id;
+    private String number;
     private List<Card> cards;
 
     private BigDecimal amount;
     private Currency currency;
+    private Bank bank;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -50,5 +51,13 @@ public class BankAccount {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
     }
 }

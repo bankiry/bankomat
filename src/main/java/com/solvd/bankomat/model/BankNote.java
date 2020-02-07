@@ -2,24 +2,24 @@ package com.solvd.bankomat.model;
 
 public class BankNote {
 
-    private long id;
-    private int par;
+    private Long id;
+    private Integer denomination;
     private Currency currency;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getPar() {
-        return par;
+    public Integer getDenomination() {
+        return denomination;
     }
 
-    public void setPar(int par) {
-        this.par = par;
+    public void setDenomination(Integer denomination) {
+        this.denomination = denomination;
     }
 
     public Currency getCurrency() {

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Atm {
 
-    private long id;
+    private Long id;
     private Bank ownerBank;
     private List<Language> languages;
     private List<BankNote> bankNotes;
@@ -13,11 +13,11 @@ public class Atm {
         RUSSIAN, ENGLISH;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

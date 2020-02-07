@@ -4,17 +4,15 @@ import java.util.List;
 
 public class Bank {
 
-    private long id;
+    private Long id;
     private String name;
-    private int departmentNumber;
-    private List<BankCustomer> bankCustomers;
     private List<ExchangeRate> exchangeRates;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -24,22 +22,6 @@ public class Bank {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getDepartmentNumber() {
-        return departmentNumber;
-    }
-
-    public void setDepartmentNumber(int departmentNumber) {
-        this.departmentNumber = departmentNumber;
-    }
-
-    public List<BankCustomer> getBankCustomers() {
-        return bankCustomers;
-    }
-
-    public void setBankCustomers(List<BankCustomer> bankCustomers) {
-        this.bankCustomers = bankCustomers;
     }
 
     public List<ExchangeRate> getExchangeRates() {
