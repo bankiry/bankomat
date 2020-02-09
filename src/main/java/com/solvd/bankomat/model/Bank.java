@@ -7,6 +7,7 @@ public class Bank {
     private Long id;
     private String name;
     private List<ExchangeRate> exchangeRates;
+    private Currency defaultCurrency;
 
     public Long getId() {
         return id;
@@ -30,5 +31,13 @@ public class Bank {
 
     public void setExchangeRates(List<ExchangeRate> exchangeRates) {
         this.exchangeRates = exchangeRates;
+    }
+
+    public Currency getDefaultCurrency() {
+        return defaultCurrency;
+    }
+
+    public void setDefaultCurrency(Currency defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
     }
 }

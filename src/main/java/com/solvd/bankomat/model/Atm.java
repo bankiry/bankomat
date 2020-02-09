@@ -8,9 +8,14 @@ public class Atm {
     private Bank ownerBank;
     private List<Language> languages;
     private List<BankNote> bankNotes;
+    private List<Operation> operations;
 
     public enum Language {
         RUSSIAN, ENGLISH;
+    }
+
+    public enum Operation {
+        WITHDRAWAL, VIEW_BALANCE
     }
 
     public Long getId() {
@@ -43,5 +48,13 @@ public class Atm {
 
     public void setBankNotes(List<BankNote> bankNotes) {
         this.bankNotes = bankNotes;
+    }
+
+    public List<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
     }
 }

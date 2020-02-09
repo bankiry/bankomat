@@ -11,6 +11,8 @@ public class Transaction {
     private BigDecimal amount;
     private Currency currency;
 
+    private Atm.Operation operation;
+
     public enum Status {
         PROCESSING, COMPLETED, FAILED;
     }
@@ -53,5 +55,13 @@ public class Transaction {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    public Atm.Operation getOperation() {
+        return operation;
+    }
+
+    public void setOperation(Atm.Operation operation) {
+        this.operation = operation;
     }
 }
