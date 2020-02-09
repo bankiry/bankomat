@@ -63,4 +63,9 @@ public class RussianMultiLanguageInput implements MultiLanguageInput {
     public String getEnterAmountMessage() {
         return "Введите сумму";
     }
+
+    @Override
+    public String getAtmHasNotRequiredDenominationsMessage() {
+        return "Введите другую сумму, пожалуйста. В банкомате нету необходимых купюр.";
+    }
 }

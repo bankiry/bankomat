@@ -1,13 +1,12 @@
 package com.solvd.bankomat.service;
 
-import com.solvd.bankomat.model.Transaction;
+import com.solvd.bankomat.exception.TransactionException;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 public interface BankAccountService {
 
-    BigDecimal getBalanceByCardInfo(Integer pin, BigInteger cardNumber, String cardholderName, Integer cvv);
+    BigDecimal getBalanceByCardInfo(String cardJson) throws TransactionException;
 
-    void withdraw(Transaction transaction);
+    void withdraw(String transactionJson) throws TransactionException;
 }

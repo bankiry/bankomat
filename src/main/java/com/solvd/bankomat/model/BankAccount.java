@@ -13,6 +13,8 @@ public class BankAccount {
     private Currency currency;
     private Bank bank;
 
+    private Integer transactionCounter;
+
     public Long getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class BankAccount {
 
     public void setBank(Bank bank) {
         this.bank = bank;
+    }
+
+    public Integer getTransactionCounter() {
+        return transactionCounter;
+    }
+
+    public void setTransactionCounter(Integer transactionCounter) {
+        this.transactionCounter = transactionCounter;
     }
 }

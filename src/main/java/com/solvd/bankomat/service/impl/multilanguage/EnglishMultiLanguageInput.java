@@ -63,4 +63,9 @@ public class EnglishMultiLanguageInput implements MultiLanguageInput {
     public String getEnterAmountMessage() {
         return "Enter an amount";
     }
+
+    @Override
+    public String getAtmHasNotRequiredDenominationsMessage() {
+        return "PLease, try to enter another sum. Atm has not required denominations.";
+    }
 }

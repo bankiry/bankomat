@@ -1,15 +1,13 @@
 package com.solvd.bankomat.service;
 
 import com.solvd.bankomat.model.Atm;
-import com.solvd.bankomat.model.Transaction;
+import com.solvd.bankomat.model.BankNote;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 public interface AtmService {
 
     Atm getAtmById(Long id);
 
-    boolean hasNeededSum(BigDecimal amount);
-
-    void withdraw(Transaction transaction);
+    void removeBankNotes(List<BankNote> bankNotes);
 }

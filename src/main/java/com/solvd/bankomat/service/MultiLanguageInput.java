@@ -25,4 +25,6 @@ public interface MultiLanguageInput {
     String getCurrencyNotExistMessage();
 
     String getEnterAmountMessage();
+
+    String getAtmHasNotRequiredDenominationsMessage();
 }

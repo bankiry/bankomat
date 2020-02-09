@@ -2,10 +2,10 @@ package com.solvd.bankomat.service.impl;
 
 import com.solvd.bankomat.db.AtmMapper;
 import com.solvd.bankomat.model.Atm;
-import com.solvd.bankomat.model.Transaction;
+import com.solvd.bankomat.model.BankNote;
 import com.solvd.bankomat.service.AtmService;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 public class AtmServiceImpl implements AtmService {
 
@@ -22,12 +22,8 @@ public class AtmServiceImpl implements AtmService {
     }
 
     @Override
-    public boolean hasNeededSum(BigDecimal amount) {
-        return false;
+    public void removeBankNotes(List<BankNote> bankNotes) {
+        atmMapper.removeBankNotes(bankNotes);
     }
 
-    @Override
-    public void withdraw(Transaction transaction) {
-
-    }
 }

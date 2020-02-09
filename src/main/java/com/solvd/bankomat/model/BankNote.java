@@ -1,6 +1,8 @@
 package com.solvd.bankomat.model;
 
-public class BankNote {
+import java.util.Comparator;
+
+public class BankNote implements Comparator<BankNote> {
 
     private Long id;
     private Integer denomination;
@@ -28,5 +30,10 @@ public class BankNote {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public int compare(BankNote b1, BankNote b2) {
+        return b1.denomination < b2.denomination ? -1 : b1.denomination.equals(b2.denomination) ? 0 : 1;
     }
 }
