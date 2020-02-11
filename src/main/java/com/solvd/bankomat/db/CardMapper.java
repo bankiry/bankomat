@@ -9,4 +9,5 @@ public interface CardMapper {
     Card getBySecurityInfo(BigInteger cardNumber, String cardholderName, Integer cvv);
 
     void updateCard(Card card);
+    
 }
