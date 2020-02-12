@@ -78,12 +78,9 @@ public class BankAccountServiceImpl implements BankAccountService {
         }
 
         BigDecimal amountAfterWithdrawal = bankAccount.getAmount().subtract(bankAccountConvertedAmount);
-        bankAccountMapper.updateAmountById(bankAccount.getId(), amountAfterWithdrawal, currentTransactionCounter);
 
-        bankAccount = bankAccountMapper.getByCardId(card.getId());
-
-        // TODO: 2/9/20 how to check that money not changed?
-        if (!bankAccount.getTransactionCounter().equals(currentTransactionCounter)) {
+        int affectedRowsCount = bankAccountMapper.updateAmountById(bankAccount.getId(), amountAfterWithdrawal, currentTransactionCounter);
+        if (affectedRowsCount == 0) {
             throw new TransactionException("Operation is not done. Please try again.");
         }
 
