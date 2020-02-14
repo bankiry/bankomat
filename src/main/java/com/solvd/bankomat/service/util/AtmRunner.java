@@ -19,7 +19,6 @@ import com.solvd.bankomat.service.impl.multilanguage.RussianMultiLanguageInput;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -40,7 +39,7 @@ public class AtmRunner {
 
         this.multiLanguageInput = askLanguage(atm);
 
-        BigInteger cardNumber = askCardNumber();
+        Long cardNumber = askCardNumber();
         String cardholderName = askCardholderName();
         Integer cvv = askCvv();
 
@@ -59,7 +58,7 @@ public class AtmRunner {
         }
     }
 
-    private void onWithdrawal(Atm atm, BigInteger cardNumber, String cardholderName, Integer cvv, Integer pin, Atm.Operation operation) throws TransactionException {
+    private void onWithdrawal(Atm atm, Long cardNumber, String cardholderName, Integer cvv, Integer pin, Atm.Operation operation) throws TransactionException {
         Currency currency = askCurrency(atm);
         BigDecimal amount = askAmount();
 
@@ -87,7 +86,7 @@ public class AtmRunner {
         }
 
         bankAccountService.withdraw(transactionAsString);
-        atmService.removeBankNotes(bankNotesToAdd);
+        atmService.removeBankNotes(bankNotesToAdd, atm.getId());
     }
 
     private List<BankNote> getAtmBanknotesByCurrency(Atm atm, Currency currency) {
@@ -102,18 +101,15 @@ public class AtmRunner {
 
     private List<BankNote> getBanknotesForWithdrawal(Integer amount, List<BankNote> atmBanknotes) {
         List<BankNote> bankNotesToAdd = null;
-
-        while (bankNotesToAdd == null) {
-            try {
-                bankNotesToAdd = AtmAlgorithm.run(amount, atmBanknotes);
-            } catch (AtmException e) {
-                System.out.println(multiLanguageInput.getAtmHasNotRequiredDenominationsMessage());
-            }
+        try {
+            bankNotesToAdd = AtmAlgorithm.run(amount, atmBanknotes);
+        } catch (AtmException e) {
+            System.out.println(multiLanguageInput.getAtmHasNotRequiredDenominationsMessage());
         }
         return bankNotesToAdd;
     }
 
-    private void onViewBalance(BigInteger cardNumber, String cardholderName, Integer cvv, Integer pin) throws TransactionException {
+    private void onViewBalance(Long cardNumber, String cardholderName, Integer cvv, Integer pin) throws TransactionException {
         Card card = new Card();
         card.setPin(pin);
         card.setNumber(cardNumber);
@@ -167,18 +163,21 @@ public class AtmRunner {
         return multiLanguageInput;
     }
 
-    private BigInteger askCardNumber() {
+    private Long askCardNumber() {
         System.out.println(multiLanguageInput.getCardNumberMessage());
-        return scanner.nextBigInteger();
+        scanner = new Scanner(System.in);
+        return scanner.nextLong();
     }
 
     private String askCardholderName() {
         System.out.println(multiLanguageInput.getCardholderNameMessage());
-        return scanner.next();
+        scanner = new Scanner(System.in);
+        return scanner.nextLine();
     }
 
     private Integer askCvv() {
         System.out.println(multiLanguageInput.getCvvMessage());
+        scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
 

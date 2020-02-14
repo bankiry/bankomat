@@ -13,6 +13,14 @@ public class ExchangeRate {
         PURCHASE, SALE
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public BigDecimal getRate() {
         return rate;
     }

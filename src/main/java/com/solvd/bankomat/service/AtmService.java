@@ -9,5 +9,5 @@ public interface AtmService {
 
     Atm getAtmById(Long id);
 
-    void removeBankNotes(List<BankNote> bankNotes);
+    void removeBankNotes(List<BankNote> bankNotes, Long atmId);
 }

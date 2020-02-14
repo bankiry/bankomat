@@ -1,0 +1,46 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.bankomat.db.BankAccountMapper">
+
+    <select id="getByCardId" resultMap="bankAccountResultMap">
+        SELECT
+            ba.id as "bank_account_id", ba.number as "bank_account_number", ba.amount as "bank_account_amount", ba.currency as "bank_account_currency", ba.transaction_counter as "bank_account_transaction_counter",
+            c.id as "card_id", c.number as "card_number", c.cardholder_name as "card_cardholder_name", c.cvv as "card_cvv",
+                c.expiration_date as "card_expiration_date", c.pin as "card_pin", c.pin_attemps_count as "card_pin_attemps_count", c.is_blocked as "card_is_blocked",
+            b.id as "bank_id", b.name as "bank_name", b.default_currency as "bank_default_currency",
+            er.id as "bank_exchange_rate_id", er.rate as "bank_exchange_rate_rate", er.currency as "bank_exchange_rate_currency", er.action as "bank_exchange_rate_action"
+        FROM
+            bank_accounts ba
+                INNER JOIN cards c ON c.bank_accounts_id = ba.id
+                INNER JOIN banks b ON ba.bank_id = b.id
+                INNER JOIN exchange_rates er on b.id = er.bank_id
+        WHERE c.id = #{cardId}
+    </select>
+
+    <update id="updateAmountById">
+        UPDATE bank_accounts SET amount = #{amount}, transaction_counter = #{transactionCounter} + 1 WHERE id = #{id} AND transaction_counter = #{transactionCounter}
+    </update>
+
+    <resultMap id="bankAccountResultMap" type="com.solvd.bankomat.model.BankAccount">
+        <id column="bank_account_id" property="id"/>
+        <result column="bank_account_number" property="number"/>
+        <result column="bank_account_amount" property="amount"/>
+        <result column="bank_account_currency" property="currency"/>
+        <result column="bank_account_transaction_counter" property="transactionCounter"/>
+        <association property="bank" resultMap="bankResultMap" columnPrefix="bank_"/>
+        <collection property="cards" resultMap="com.solvd.bankomat.db.CardMapper.cardResultMap" columnPrefix="card_"/>
+    </resultMap>
+
+    <resultMap id="bankResultMap" type="com.solvd.bankomat.model.Bank">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="defaultCurrency" column="default_currency"/>
+        <collection property="exchangeRates" resultMap="exchangeRateResultMap" columnPrefix="exchange_rate_"/>
+    </resultMap>
+
+    <resultMap id="exchangeRateResultMap" type="com.solvd.bankomat.model.ExchangeRate">
+        <id column="id" property="id"/>
+        <result property="rate" column="rate"/>
+        <result property="currency" column="currency"/>
+        <result property="action" column="action"/>
+    </resultMap>
+</mapper>

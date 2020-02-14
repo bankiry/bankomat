@@ -1,0 +1,40 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.bankomat.db.AtmMapper">
+
+    <select id="getAtmById" resultMap="atmResultMap">
+        SELECT
+            a.id as "atm_id",
+           b.id as "bank_id", b.name as "bank_name", b.default_currency as "bank_default_currency",
+           er.id as "bank_exchange_rate_id", er.rate as "bank_exchange_rate_rate", er.currency as "bank_exchange_rate_currency", er.action as "bank_exchange_rate_action",
+           bn.id as "banknote_id", bn.denomination as "banknote_denomination", bn.currency as "banknote_currency"
+        FROM atms a
+            INNER JOIN
+                banks b ON a.bank_id = b.id
+            INNER JOIN
+                exchange_rates er ON b.id = er.bank_id
+            INNER JOIN
+                atm_banknotes ab ON a.id = ab.atm_id
+            INNER JOIN
+                banknotes bn ON ab.banknote_id = bn.id
+        WHERE a.id = #{id}
+    </select>
+
+    <delete id="removeBankNoteById">
+        DELETE FROM atm_banknotes WHERE atm_id = #{atmId} AND banknote_id = #{banknoteId} LIMIT 1
+    </delete>
+
+    <resultMap id="atmResultMap" type="com.solvd.bankomat.model.Atm">
+        <id column="atm_id" property="id"/>
+        <association property="ownerBank" resultMap="com.solvd.bankomat.db.BankAccountMapper.bankResultMap" columnPrefix="bank_"/>
+        <!--<collection property="languages" column="atm_language" javaType="com.solvd.bankomat.model.Atm.Language"/>
+        <collection property="operations" column="atm_operation" javaType="com.solvd.bankomat.model.Atm.Operation"/>-->
+        <collection property="bankNotes" resultMap="banknoteResultMap" columnPrefix="banknote_"/>
+    </resultMap>
+
+    <resultMap id="banknoteResultMap" type="com.solvd.bankomat.model.BankNote">
+        <id column="id" property="id"/>
+        <result property="denomination" column="denomination"/>
+        <result property="currency" column="currency"/>
+    </resultMap>
+
+</mapper>

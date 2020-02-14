@@ -1,0 +1,8 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.bankomat.db.TransactionMapper">
+
+    <insert id="create" useGeneratedKeys="true">
+        INSERT INTO transactions(status, card_id, amount, operation, currency) VALUES (#{status}, #{card.id}, #{amount}, #{operation}, #{currency})
+    </insert>
+
+</mapper>

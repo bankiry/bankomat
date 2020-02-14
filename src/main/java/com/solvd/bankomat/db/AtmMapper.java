@@ -1,13 +1,11 @@
 package com.solvd.bankomat.db;
 
 import com.solvd.bankomat.model.Atm;
-import com.solvd.bankomat.model.BankNote;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface AtmMapper {
 
     Atm getAtmById(Long id);
 
-    void removeBankNotes(List<BankNote> bankNotes);
+    void removeBankNoteById(@Param("banknoteId") Long banknoteId, @Param("atmId") Long atmId);
 }

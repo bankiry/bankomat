@@ -1,12 +1,11 @@
 package com.solvd.bankomat.model;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 public class Card {
 
     private Long id;
-    private BigInteger number;
+    private Long number;
     private String cardHolderName;
     private Integer cvv;
     private Date expirationDate;
@@ -24,11 +23,11 @@ public class Card {
         this.id = id;
     }
 
-    public BigInteger getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(BigInteger number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 

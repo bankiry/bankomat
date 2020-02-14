@@ -2,9 +2,9 @@ package com.solvd.bankomat.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.solvd.bankomat.db.BankAccountMapper;
-import com.solvd.bankomat.db.CardMapper;
-import com.solvd.bankomat.db.TransactionMapper;
+import com.solvd.bankomat.dao.BankAccountDao;
+import com.solvd.bankomat.dao.CardDao;
+import com.solvd.bankomat.dao.TransactionDao;
 import com.solvd.bankomat.exception.TransactionException;
 import com.solvd.bankomat.model.Bank;
 import com.solvd.bankomat.model.BankAccount;
@@ -17,20 +17,21 @@ import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 
+import static com.solvd.bankomat.model.Transaction.Status.COMPLETED;
+
 public class BankAccountServiceImpl implements BankAccountService {
 
     private static final Logger LOGGER = Logger.getLogger(BankAccountServiceImpl.class);
 
-    private CardMapper cardMapper;
-    private BankAccountMapper bankAccountMapper;
-    private TransactionMapper transactionMapper;
+    private CardDao cardDao;
+    private BankAccountDao bankAccountDao;
+    private TransactionDao transactionDao;
     private ObjectMapper objectMapper;
 
     public BankAccountServiceImpl() {
-        // TODO: 2/8/20 change with real implementation
-        this.cardMapper = null;
-        this.bankAccountMapper = null;
-        this.transactionMapper = null;
+        this.cardDao = new CardDao();
+        this.bankAccountDao = new BankAccountDao();
+        this.transactionDao = new TransactionDao();
         this.objectMapper = new ObjectMapper();
     }
 
@@ -43,10 +44,10 @@ public class BankAccountServiceImpl implements BankAccountService {
             LOGGER.error("Cannot read card json into card object");
         }
 
-        Card card = cardMapper.getBySecurityInfo(cardFromJson.getNumber(), cardFromJson.getCardHolderName(), cardFromJson.getCvv());
+        Card card = cardDao.getBySecurityInfo(cardFromJson.getNumber(), cardFromJson.getCardHolderName(), cardFromJson.getCvv());
         verifySecurityInfo(cardFromJson.getPin(), card);
 
-        BankAccount bankAccount = bankAccountMapper.getByCardId(card.getId());
+        BankAccount bankAccount = bankAccountDao.getByCardId(card.getId());
         return bankAccount.getAmount();
     }
 
@@ -61,10 +62,10 @@ public class BankAccountServiceImpl implements BankAccountService {
         }
 
         Card card = transaction.getCard();
-        Card dbCard = cardMapper.getBySecurityInfo(card.getNumber(), card.getCardHolderName(), card.getCvv());
+        Card dbCard = cardDao.getBySecurityInfo(card.getNumber(), card.getCardHolderName(), card.getCvv());
         verifySecurityInfo(transaction.getCard().getPin(), dbCard);
 
-        BankAccount bankAccount = bankAccountMapper.getByCardId(card.getId());
+        BankAccount bankAccount = bankAccountDao.getByCardId(dbCard.getId());
 
         int currentTransactionCounter = bankAccount.getTransactionCounter();
 
@@ -79,12 +80,14 @@ public class BankAccountServiceImpl implements BankAccountService {
 
         BigDecimal amountAfterWithdrawal = bankAccount.getAmount().subtract(bankAccountConvertedAmount);
 
-        int affectedRowsCount = bankAccountMapper.updateAmountById(bankAccount.getId(), amountAfterWithdrawal, currentTransactionCounter);
+        int affectedRowsCount = bankAccountDao.updateAmountById(bankAccount.getId(), amountAfterWithdrawal, currentTransactionCounter);
         if (affectedRowsCount == 0) {
             throw new TransactionException("Operation is not done. Please try again.");
         }
 
-        transactionMapper.create(transaction);
+        transaction.setCard(dbCard);
+        transaction.setStatus(COMPLETED);
+        transactionDao.create(transaction);
     }
 
     private BigDecimal convertAmount(BankAccount bankAccount, Transaction transaction) {
@@ -157,11 +160,11 @@ public class BankAccountServiceImpl implements BankAccountService {
             LOGGER.info("Card with id " + card.getId() + " attempts count is 0. We are blocking this card");
             card.setBlocked(true);
         }
-        cardMapper.updateCard(card);
+        cardDao.updateCard(card);
     }
 
     private void resetCardAttemptsToDefault(Card card) {
         card.setPinAttemptsCount(3);
-        cardMapper.updateCard(card);
+        cardDao.updateCard(card);
     }
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.bankomat.db.CardMapper">
+
+    <select id="getBySecurityInfo" resultMap="cardResultMap">
+        SELECT
+            id, number, cardholder_name, cvv, expiration_date, pin, pin_attemps_count, is_blocked FROM cards
+        WHERE number = #{number} AND cardholder_name = #{cardHolderName} AND cvv = #{cvv}
+    </select>
+
+    <update id="updateCard">
+        UPDATE cards SET pin_attemps_count = #{pinAttemptsCount} AND is_blocked = #{isBlocked} WHERE id = #{id}
+    </update>
+
+    <resultMap id="cardResultMap" type="com.solvd.bankomat.model.Card">
+        <id column="id" property="id"/>
+        <result column="number" property="number"/>
+        <result column="cardholder_name" property="cardHolderName"/>
+        <result column="cvv" property="cvv"/>
+        <result column="expiration_date" property="expirationDate"/>
+        <result column="pin" property="pin"/>
+        <result column="pin_attemps_count" property="pinAttemptsCount"/>
+        <result column="is_blocked" property="isBlocked"/>
+    </resultMap>
+
+</mapper>

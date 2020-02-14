@@ -57,4 +57,5 @@ public class Atm {
     public void setOperations(List<Operation> operations) {
         this.operations = operations;
     }
+
 }
