@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface CardMapper {
 
+    void createCard(Card card);
+
     Card getBySecurityInfo(@Param("number") Long number, @Param("cardHolderName") String cardHolderName, @Param("cvv") Integer cvv);
 
     void updateCard(Card card);

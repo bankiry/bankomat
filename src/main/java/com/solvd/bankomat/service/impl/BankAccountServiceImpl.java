@@ -16,6 +16,7 @@ import com.solvd.bankomat.service.BankAccountService;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static com.solvd.bankomat.model.Transaction.Status.COMPLETED;
 
@@ -92,16 +93,14 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     private BigDecimal convertAmount(BankAccount bankAccount, Transaction transaction) {
         Bank bank = bankAccount.getBank();
-        Currency bankDefaultCurrency = bank.getDefaultCurrency();
-
         BigDecimal bankAccountConvertedAmount;
 
         if (!transaction.getCurrency().equals(bankAccount.getCurrency())) {
-            ExchangeRate purchaseRate = getBankPurchaseRateByCurrency(bank, transaction.getCurrency());
-            BigDecimal defaultBankCurrencyAmount = transaction.getAmount().multiply(purchaseRate.getRate());
-            ExchangeRate saleRate = getBankSaleRateByCurrency(bank, bankAccount.getCurrency());
+            ExchangeRate saleRate = getBankSaleRateByCurrency(bank, transaction.getCurrency());
+            BigDecimal defaultBankCurrencyAmount = transaction.getAmount().multiply(saleRate.getRate());
+            ExchangeRate purchaseRate = getBankPurchaseRateByCurrency(bank, bankAccount.getCurrency());
 
-            bankAccountConvertedAmount = defaultBankCurrencyAmount.multiply(saleRate.getRate());
+            bankAccountConvertedAmount = defaultBankCurrencyAmount.divide(purchaseRate.getRate(), 3, RoundingMode.CEILING);
         } else {
             bankAccountConvertedAmount = transaction.getAmount();
         }

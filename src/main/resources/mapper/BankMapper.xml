@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.bankomat.db.BankMapper">
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO banks(name, default_currency) values (#{name}, #{defaultCurrency})
+    </insert>
+
+    <delete id="removeById">
+        DELETE FROM banks WHERE id = #{id}
+    </delete>
+
+</mapper>

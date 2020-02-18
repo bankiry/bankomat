@@ -13,6 +13,24 @@ public class AtmDao {
 
     private static final Logger LOGGER = Logger.getLogger(AtmDao.class);
 
+    public Atm createAtm(Atm atm) {
+        SqlSession session = null;
+        try {
+            session = SessionFactory.getSession();
+            AtmMapper mapper = session.getMapper(AtmMapper.class);
+            mapper.create(atm);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.commit();
+                session.flushStatements();
+                session.close();
+            }
+        }
+        return atm;
+    }
+
     public Atm getAtmById(Long id) {
         Atm result = null;
         SqlSession session = null;
@@ -38,6 +56,40 @@ public class AtmDao {
             }
         }
         return result;
+    }
+
+    public void removeById(Long id) {
+        SqlSession session = null;
+        try {
+            session = SessionFactory.getSession();
+            AtmMapper mapper = session.getMapper(AtmMapper.class);
+            mapper.removeById(id);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.commit();
+                session.flushStatements();
+                session.close();
+            }
+        }
+    }
+
+    public void addBanknote(Long banknoteId, Long atmId) {
+        SqlSession session = null;
+        try {
+            session = SessionFactory.getSession();
+            AtmMapper mapper = session.getMapper(AtmMapper.class);
+            mapper.addBanknote(banknoteId, atmId);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.commit();
+                session.flushStatements();
+                session.close();
+            }
+        }
     }
 
     public void removeBankNotes(List<BankNote> bankNotes, Long atmId) {

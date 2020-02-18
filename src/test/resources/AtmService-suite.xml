@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Atm service tests">
+    <test name="Lab tests">
+        <classes>
+            <class name="com.solvd.bankomat.AtmServiceTest"/>
+        </classes>
+    </test>
+</suite>

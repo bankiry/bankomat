@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.bankomat.db.ExchangeRateMapper">
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="exchangeRate.id" keyColumn="id">
+        INSERT INTO exchange_rates(bank_id, rate, currency, action) values (#{bankId}, #{exchangeRate.rate}, #{exchangeRate.currency}, #{exchangeRate.action})
+    </insert>
+
+    <delete id="removeById">
+        DELETE FROM exchange_rates WHERE id = #{id}
+    </delete>
+
+</mapper>
